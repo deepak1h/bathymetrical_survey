@@ -1,5 +1,5 @@
-import bethymetry.sonic as sonic
-import bethymetry.gps as gps
+import sonic
+import gps
 import time
 from threading import *
 
@@ -20,6 +20,7 @@ class bethymetry_data(Thread):
         self.__location = "00.0000,00.0000";
         self.__time = "00.00.00";
         self.__data = []
+        self.__lat_long = []
 
 
 
@@ -39,27 +40,9 @@ class bethymetry_data(Thread):
         self.__location.append(self.__depth)
         return ",".join(self.__location)
 
+    def run(self):
+        while True:
+            self.__lat_long = self.__gps.lat_long()
 
-
-
-
-
-
-
-
-
-
-
-
-                        
-                        
-                        
-                        
-        
-        
-
-        
-        
-    
-        
-    
+    def lat_long(self):
+        return self.__lat_long
