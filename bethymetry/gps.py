@@ -135,3 +135,5 @@ class gps(Thread):
         return self.__location
 
 
+    def lat_long(self):
+        return [self.__lat_in_degree,self.__long_in_degree]
