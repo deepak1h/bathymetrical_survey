@@ -4,9 +4,7 @@ import time
 from threading import *
 
 
-class bethymetry_data(Thread):
-
-    
+class bathymetry_data(Thread):
     def __init__(self):
         Thread.__init__(self)
         self.__gps = gps.gps();
@@ -14,15 +12,12 @@ class bethymetry_data(Thread):
         self.__gps.start()
         self.__sonic.start()
 
-
     def reset(self):
         self.__depth = "00"
         self.__location = "00.0000,00.0000";
         self.__time = "00.00.00";
         self.__data = []
         self.__lat_long = []
-
-
 
     def depth(self):
         self.__depth = self.__sonic.depth()

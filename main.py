@@ -1,22 +1,30 @@
 import bethymetry.bethymetry_data as bethymetry
+from threading import *
+import time
+data = ""
+location = []
+collect = False
+def collect_data():
+    global collect
+    collect = True
 
-project = bethymetry.bethymetry_data()
+class Project(Thread):
+    def __init__(self):
+        Thread.__init__(self)
+        self.__project = bethymetry.bathymetry_data()
+        self.__project.start()
+
+    def run(self):
+        global data
+        global location
+        global collect
+        while True:
+            if collect == True:
+                data = self.__project.data()
+                collect = False
+
+            time.sleep(0.2)
+            location = self.__project.lat_long()
+
+project = Project()
 project.start()
-collect_data = False
-
-def collect()
-    global collect_data
-    collect_data = True
-
-
-
-
-while True:
-    if collect_data = True:
-        data = project.data()
-        collect_data = False
-
-    time.sleep(0.2)
-    location = project.lat_long()
-
-
