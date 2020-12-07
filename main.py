@@ -1,16 +1,22 @@
-# This is a sample Python script.
+import bethymetry.bethymetry_data as bethymetry
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+project = bethymetry.bethymetry_data()
+project.start()
+collect_data = False
+
+def collect()
+    global collect_data
+    collect_data = True
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+while True:
+    if collect_data = True:
+        data = project.data()
+        collect_data = False
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    time.sleep(0.2)
+    location = project.lat_long()
+
+
