@@ -11,6 +11,7 @@ class log(Thread):
         self.__old_time = []
         self.__new_time = []
 
+
     def run(self):
         while True:
             self.__new_time = project.time_update_log
