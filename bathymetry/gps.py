@@ -59,39 +59,58 @@ class gps(Thread):
             return False
 
     def get_data(self):
+
         while True:
 
             try:
+
                 self.__received_data = str(self.__ser.readline())
                 data_available = self.__received_data.find(self.__info)
                 
                 if data_available > 0:
+
                     self.__buffer = self.__received_data.split("$GNGGA,", 1)[1]
                     # print(self.__buffer)
+
                     if len(self.__buffer) < 50:
+
                         print("booting")
                         self.reset()
                         self.get_data()
+
                     else:
+
                         self.__NMEA_buff = (self.__buffer.split(','))
                         break
+
             finally:
+
                 pass
 
     def lock(self):
 
         print("GPS locking....")
+
         while True:
+
             try:
+
                 self.get_data()
                 # print(self.__NMEA_buff)
                 self.__locked = int(self.__NMEA_buff[5])
+
                 if self.locked():
+
                     break
+
             except IndexError:
+
                 print("INDEXERR")
+
             except ValueError:
+
                 print("VALUEERR")
+
         print("locked")
 
     def __update_data(self):
@@ -107,7 +126,9 @@ class gps(Thread):
     def run(self):
 
         self.lock()
+
         while True:
+
             self.reset()
             self.get_data()
             self.__update_data()
@@ -115,10 +136,13 @@ class gps(Thread):
 
     def __GPS_Info(self):
 
-        if self.locked():           
+        if self.locked():
+
             self.__lat_in_degrees = self.__convert_to_degrees(self.__nmea_lat)
             self.__long_in_degree = self.__convert_to_degrees(self.__nmea_long)
+
         else:
+
             self.__lat_in_degree = "NODATA"
             self.__long_in_degree = "NODATA"
             
@@ -136,12 +160,17 @@ class gps(Thread):
         tim = self.__nmea_time
         time.sleep(0.2)
         tim2 = self.__nmea_time
+
         if tim2 > tim:
+
             return True
+
         else:
+
             return False
 
     def location(self):
+
         self.__location = [self.__curr_time,
                            self.__long_in_degree,
                            self.__long_in_degree,
@@ -150,4 +179,5 @@ class gps(Thread):
         return self.__location
 
     def lat_long(self):
+
         return [self.__lat_in_degree, self.__long_in_degree]

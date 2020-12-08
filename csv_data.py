@@ -15,11 +15,11 @@ class Csv(Thread):
         self.__old_data = "00,00,00,00"
         self.__new_data = "00,00,00,00"
 
-    def put(self):
+    def put(self, lat, long, ele, dep):
         http = urllib3.PoolManager()
 
         r = http.request('GET',
-                         "https://deepakhome.000webhostapp.com/updateacp.php?lat={}&lon={}&ele={}&dep={}".format(lat,long,ele,)                                                                                                      dep))
+                         "https://deepakhome.000webhostapp.com/updateacp.php?lat={}&lon={}&ele={}&dep={}".format(lat, long, ele, depth)                                                                                                      dep))
         data = r.data.decode('utf-8')
 
     def run(self):
