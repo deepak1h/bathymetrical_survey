@@ -1,5 +1,7 @@
 import main as project
 from threading import *
+import time
+
 
 class log(Thread):
 
@@ -13,10 +15,9 @@ class log(Thread):
         while True:
             self.__new_time = project.time_update_log
             if self.__new_time > self.__old_time:
-                self.__log_file = open(, self.__log_name,"a+")
+                self.__log_file = open(self.__log_name, "a+")
                 self.__old_time = self.__new_time
                 self.__log_file.write(time.asctime().split()[3]+","+str(project.location))
                 self.__log_file.close()
             else:
                 pass
-

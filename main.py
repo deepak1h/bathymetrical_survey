@@ -1,4 +1,4 @@
-import bethymetry.bethymetry_data as bethymetry
+import bathymetry.bathymetry_data as bathymetry
 from threading import *
 import time
 data = ""
@@ -12,7 +12,7 @@ def collect_data():
 class Project(Thread):
     def __init__(self):
         Thread.__init__(self)
-        self.__project = bethymetry.bathymetry_data()
+        self.__project = bathymetry.bathymetry_data()
         self.__project.start()
 
     def run(self):

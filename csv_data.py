@@ -7,7 +7,7 @@ import json
 
 
 
-class csv(Thread):
+class Csv(Thread):
 
     def __init__(self):
         Thread.__init__(self)
