@@ -12,13 +12,12 @@ time_update_log = ""
 def collect_data():
     global collect
     collect = True
-    
 
 
 class Project(Thread):
     def __init__(self):
         Thread.__init__(self)
-        self.__project = bathymetry.bathymetry_data()
+        self.__project = bathymetry.BathymetryData()
         self.__project.start()
 
     def run(self):
@@ -37,4 +36,3 @@ class Project(Thread):
 
 project = Project()
 project.start()
-

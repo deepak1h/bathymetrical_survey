@@ -7,9 +7,9 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 
-class sonic(Thread):
+class Sonic(Thread):
     
-    def __init__(self, trigger = 18, echo = 23):
+    def __init__(self, trigger=18, echo=23):
 
         Thread.__init__(self)
         self.__trigger = trigger
@@ -42,7 +42,6 @@ class sonic(Thread):
     def burst_off(self):
         print("sonic burst Off")
         self.__burst = False
-        
 
     def off(self):
         print("sonic OFF")
@@ -77,7 +76,7 @@ class sonic(Thread):
                     
                 else:
                     if not count:
-                        count+=1
+                        count += 1
                         print("SONICE_BURST_OFF")
 
             except KeyboardInterrupt:
@@ -118,7 +117,7 @@ class sonic(Thread):
             self.__dist = round((self.__time_elapsed * 34300) / 2, 2)
             self.__updated_time = time.time()
             self.__curr_time = time.asctime().split()[3]
-            #print(self.__dist)
+            # print(self.__dist)
         
     def is_working(self):
 

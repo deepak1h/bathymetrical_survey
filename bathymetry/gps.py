@@ -2,7 +2,8 @@ import serial
 import time
 from threading import *
 
-class gps(Thread):
+
+class Gps(Thread):
 
     def __init__(self):
 
@@ -38,8 +39,6 @@ class gps(Thread):
         self.__satellite = "0"
         self.__curr_time = "00.00.00"
 
-
-
     def satellite(self):
         
         return self.__satellite
@@ -66,7 +65,7 @@ class gps(Thread):
                 if data_available > 0:
 
                     self.__buffer = self.__received_data.split("$GNGGA,", 1)[1]
-                    #print(self.__buffer)
+                    # print(self.__buffer)
 
                     if len(self.__buffer) < 50:
 
@@ -77,7 +76,7 @@ class gps(Thread):
                     else:
 
                         self.__NMEA_buff = (self.__buffer.split(','))
-                        #print(self.__NMEA_buff)
+                        # print(self.__NMEA_buff)
                         return True
 
             finally:
@@ -93,15 +92,14 @@ class gps(Thread):
             try:
 
                 self.get_data()
-                #print(self.__NMEA_buff)
+                # print(self.__NMEA_buff)
                 self.__locked = int(self.__NMEA_buff[5])
-                #print(type(self.__locked),self.__locked)
+                # print(type(self.__locked),self.__locked)
 
                 if self.locked():
+
                     print("locked")
                     break
-                    
-                    
 
             except IndexError:
 
@@ -110,11 +108,10 @@ class gps(Thread):
             except ValueError:
 
                 print("VALUEERR")
-                
-
 
     def __update_data(self):
-        #print(self.__NMEA_buff)
+
+        # print(self.__NMEA_buff)
         self.reset()
         self.__nmea_time = self.__NMEA_buff[0]
         self.__nmea_lat = float(self.__NMEA_buff[1])
@@ -123,8 +120,6 @@ class gps(Thread):
         self.__satellite = int(self.__NMEA_buff[6])
         self.__NMEA_buff = []
         self.__curr_time = time.asctime().split()[3]
-        
-        
 
     def run(self):
 
@@ -134,16 +129,14 @@ class gps(Thread):
 
             self.get_data()
             self.__update_data()
-            self.__GPS_Info()
-            
+            self.__gps_info()
 
-    def __GPS_Info(self):
+    def __gps_info(self):
 
         if self.locked():
 
             self.__lat_in_degree = self.__convert_to_degrees(self.__nmea_lat)
             self.__long_in_degree = self.__convert_to_degrees(self.__nmea_long)
-            
 
         else:
 
@@ -165,7 +158,7 @@ class gps(Thread):
         tim = self.__nmea_time
         time.sleep(0.5)
         tim2 = self.__nmea_time
-        #print(tim,tim2)
+        # print(tim,tim2)
 
         if tim2 > tim:
 
@@ -177,15 +170,14 @@ class gps(Thread):
 
     def location(self):
         if self.locked():
-            self.__location = [self.__curr_time,
-                               self.__lat_in_degree,
-                               self.__long_in_degree,
-                              str( self.__locked),
+            self.__location = [str(self.__curr_time),
+                               str(self.__lat_in_degree),
+                               str(self.__long_in_degree),
+                               str(self.__locked),
                                str(self.__satellite)]
             return self.__location
         else:
-            return["00.00.00","0.0000","0.0000","0","00"]
-            
+            return["00.00.00", "0.0000", "0.0000", "0", "00"]
 
     def lat_long(self):
 

@@ -1,31 +1,30 @@
 import bathymetry.sonic as sonic
 import bathymetry.gps as gps
 from threading import *
-import time
 
 
-class bathymetry_data(Thread):
+class BathymetryData(Thread):
 
     def __init__(self):
 
         Thread.__init__(self)
-        self.__gps = gps.gps()
-        self.__sonic = sonic.sonic(18, 23)
+        self.__gps = gps.Gps()
+        self.__sonic = sonic.Sonic(18, 23)
         self.__gps.start()
         self.__sonic.start()
         self.__depth = "00"
-        self.__location = ["00.00.00","0.0000,0.0000"]
+        self.__location = ["00.00.00", "0.0000,0.0000"]
         self.__time = "00.00.00"
-        self.__data = ["00.00.00","0.0000","0.0000","00","00","00"]
+        self.__data = ["00.00.00", "0.0000", "0.0000", "00", "00", "00"]
         self.__lat_long = []
 
     def reset(self):
 
         self.__depth = "00"
-        self.__location = ["00.00.00","0.0000","0.0000"]
+        self.__location = ["00.00.00", "0.0000", "0.0000"]
         self.__time = "00.00.00"
-        self.__data = ["00.00.00","0.0000","0.0000","00","00","00"]
-        self.__lat_long = ["0.0000","0.0000"]
+        self.__data = ["00.00.00", "0.0000", "0.0000", "00", "00", "00"]
+        self.__lat_long = ["0.0000", "0.0000"]
 
     def depth(self):
         
@@ -50,7 +49,6 @@ class bathymetry_data(Thread):
         self.depth()
         self.location()
         self.__location.append(self.__depth)
-        print(self.__location)
         return ",".join(self.__location)
 
     def run(self):

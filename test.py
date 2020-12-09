@@ -1,9 +1,7 @@
 import main as project
+import time
 
-project.collect = True
-
-while true:
-    print(project.time_update_log)
-    print(project.data)
-    print(project.location)
-    
+while True:
+    project.collect_data()
+    print(project.data, project.time_update_log, project.location)
+    time.sleep(1)
