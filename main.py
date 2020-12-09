@@ -12,6 +12,7 @@ time_update_log = ""
 def collect_data():
     global collect
     collect = True
+    
 
 
 class Project(Thread):
@@ -30,8 +31,6 @@ class Project(Thread):
             if collect:
                 data = self.__project.data()
                 collect = False
-
-            time.sleep(0.2)
             location = self.__project.lat_long()
             time_update_log = time.time()
 

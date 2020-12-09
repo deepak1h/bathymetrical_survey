@@ -1,5 +1,5 @@
-import sonic
-import gps
+import bathymetry.sonic as sonic
+import bathymetry.gps as gps
 from threading import *
 import time
 
