@@ -21,6 +21,7 @@ class Project(Thread):
         self.__project.start()
 
     def run(self):
+        
         global data
         global location
         global collect
@@ -37,3 +38,4 @@ class Project(Thread):
 
 project = Project()
 project.start()
+

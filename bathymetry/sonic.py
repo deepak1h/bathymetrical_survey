@@ -5,12 +5,11 @@ from threading import *
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-depth = ""
 
 
 class sonic(Thread):
     
-    def __init__(self, trigger, echo):
+    def __init__(self, trigger = 18, echo = 23):
 
         Thread.__init__(self)
         self.__trigger = trigger
@@ -18,12 +17,12 @@ class sonic(Thread):
         GPIO.setup(self.__trigger, GPIO.OUT)
         GPIO.setup(self.__echo, GPIO.IN)
         self.__status = 0
-        self.reset()
         self.__timeout = 0.5
         self.__dist = 0
         self.__time_elapsed = 0
         self.__updated_time = 0
         self.__curr_time = ""
+        self.__burst = False
 
     def reset(self):
 
@@ -33,41 +32,53 @@ class sonic(Thread):
         self.__curr_time = ""
 
     def on(self):
-
+        print("sonic ON")
         self.__status = True
+        
+    def burst_on(self):
+        print("sonic burst on")
+        self.__burst = True
+    
+    def burst_off(self):
+        print("sonic burst Off")
+        self.__burst = False
+        
 
     def off(self):
-
+        print("sonic OFF")
         self.__status = False
 
     def depth(self):
 
-        if self.__status:
-
-            if self.__dist > 0 and self.is_working():
-
+        if self.is_working() and self.__status:
+            
+            if self.__dist:
+                
+                self.__status = False
                 return str(self.__dist)
+            
+            else:
+                return "DEPTHERR"
 
         else:
-
-            print("Not working")
+            
             return "SONICERR"
 
-        self.__status = False
-
     def run(self):
-
+        count = 0
         while True:
-
+            
             try:
 
-                if self.__status:
-
-                    self.distance()
-
+                if self.__burst:
+                    self.__status = True
+                    self.depth()
+                    count = 0
+                    
                 else:
-
-                    print("Sonic Status OFF.")
+                    if not count:
+                        count+=1
+                        print("SONICE_BURST_OFF")
 
             except KeyboardInterrupt:
 
@@ -107,6 +118,7 @@ class sonic(Thread):
             self.__dist = round((self.__time_elapsed * 34300) / 2, 2)
             self.__updated_time = time.time()
             self.__curr_time = time.asctime().split()[3]
+            #print(self.__dist)
         
     def is_working(self):
 

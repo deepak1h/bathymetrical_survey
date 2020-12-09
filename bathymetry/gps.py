@@ -19,7 +19,6 @@ class gps(Thread):
         self.__long_in_degree = 0
         self.__locked = 0
         self.__location = []
-        self.__status = False
         self.__nmea_time = []
         self.__satellite = "0"
         self.__curr_time = "00.00.00"
@@ -31,26 +30,23 @@ class gps(Thread):
         self.__buffer = 0
         self.__nmea_lat = 0
         self.__nmea_long = 0
+        self.__locked = 0
         self.__lat_in_degree = 0
         self.__long_in_degree = 0
-        self.__locked = 0
         self.__location = []
-        self.__status = False
         self.__nmea_time = []
         self.__satellite = "0"
         self.__curr_time = "00.00.00"
 
-    def status(self):
 
-        return str(self.__status)
 
     def satellite(self):
-
+        
         return self.__satellite
 
     def locked(self):
 
-        if self.__locked > 0:
+        if self.__locked:
 
             return True
 
@@ -70,7 +66,7 @@ class gps(Thread):
                 if data_available > 0:
 
                     self.__buffer = self.__received_data.split("$GNGGA,", 1)[1]
-                    # print(self.__buffer)
+                    #print(self.__buffer)
 
                     if len(self.__buffer) < 50:
 
@@ -81,7 +77,8 @@ class gps(Thread):
                     else:
 
                         self.__NMEA_buff = (self.__buffer.split(','))
-                        break
+                        #print(self.__NMEA_buff)
+                        return True
 
             finally:
 
@@ -89,19 +86,22 @@ class gps(Thread):
 
     def lock(self):
 
-        print("GPS locking....")
+        print("GPS locking...")
 
         while True:
 
             try:
 
                 self.get_data()
-                # print(self.__NMEA_buff)
+                #print(self.__NMEA_buff)
                 self.__locked = int(self.__NMEA_buff[5])
+                #print(type(self.__locked),self.__locked)
 
                 if self.locked():
-
+                    print("locked")
                     break
+                    
+                    
 
             except IndexError:
 
@@ -110,11 +110,12 @@ class gps(Thread):
             except ValueError:
 
                 print("VALUEERR")
+                
 
-        print("locked")
 
     def __update_data(self):
-
+        #print(self.__NMEA_buff)
+        self.reset()
         self.__nmea_time = self.__NMEA_buff[0]
         self.__nmea_lat = float(self.__NMEA_buff[1])
         self.__nmea_long = float(self.__NMEA_buff[3])
@@ -122,6 +123,8 @@ class gps(Thread):
         self.__satellite = int(self.__NMEA_buff[6])
         self.__NMEA_buff = []
         self.__curr_time = time.asctime().split()[3]
+        
+        
 
     def run(self):
 
@@ -129,17 +132,18 @@ class gps(Thread):
 
         while True:
 
-            self.reset()
             self.get_data()
             self.__update_data()
             self.__GPS_Info()
+            
 
     def __GPS_Info(self):
 
         if self.locked():
 
-            self.__lat_in_degrees = self.__convert_to_degrees(self.__nmea_lat)
+            self.__lat_in_degree = self.__convert_to_degrees(self.__nmea_lat)
             self.__long_in_degree = self.__convert_to_degrees(self.__nmea_long)
+            
 
         else:
 
@@ -153,13 +157,15 @@ class gps(Thread):
         mm_mmmm = (decimal_value - int(decimal_value))/0.6
         position = degrees + mm_mmmm
         position = "%.6f" % position
+        
         return str(position)
 
     def is_working(self):
         
         tim = self.__nmea_time
-        time.sleep(0.2)
+        time.sleep(0.5)
         tim2 = self.__nmea_time
+        #print(tim,tim2)
 
         if tim2 > tim:
 
@@ -170,13 +176,16 @@ class gps(Thread):
             return False
 
     def location(self):
-
-        self.__location = [self.__curr_time,
-                           self.__long_in_degree,
-                           self.__long_in_degree,
-                           self.__locked,
-                           self.__satellite]
-        return self.__location
+        if self.locked():
+            self.__location = [self.__curr_time,
+                               self.__lat_in_degree,
+                               self.__long_in_degree,
+                              str( self.__locked),
+                               str(self.__satellite)]
+            return self.__location
+        else:
+            return["00.00.00","0.0000","0.0000","0","00"]
+            
 
     def lat_long(self):
 
