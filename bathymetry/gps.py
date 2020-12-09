@@ -177,9 +177,9 @@ class gps(Thread):
 
     def location(self):
         if self.locked():
-            self.__location = [self.__curr_time,
-                               self.__lat_in_degree,
-                               self.__long_in_degree,
+            self.__location = [str(self.__curr_time),
+                               str(self.__lat_in_degree),
+                               str(self.__long_in_degree),
                               str( self.__locked),
                                str(self.__satellite)]
             return self.__location

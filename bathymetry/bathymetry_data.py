@@ -50,7 +50,7 @@ class bathymetry_data(Thread):
         self.depth()
         self.location()
         self.__location.append(self.__depth)
-        print(self.__location)
+        
         return ",".join(self.__location)
 
     def run(self):
