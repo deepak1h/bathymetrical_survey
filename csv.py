@@ -1,4 +1,4 @@
-import data as project
+from data import *
 from threading import *
 import time
 
@@ -35,3 +35,6 @@ class Csv(Thread):
             else:
 
                 pass
+
+
+csv = Csv()

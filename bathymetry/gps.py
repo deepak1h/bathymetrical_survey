@@ -169,14 +169,18 @@ class Gps(Thread):
             return False
 
     def location(self):
+
         if self.locked():
+
             self.__location = [str(self.__curr_time),
                                str(self.__lat_in_degree),
                                str(self.__long_in_degree),
                                str(self.__locked),
                                str(self.__satellite)]
             return self.__location
+
         else:
+
             return["00.00.00", "0.0000", "0.0000", "0", "00"]
 
     def lat_long(self):
