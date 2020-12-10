@@ -1,4 +1,4 @@
-import main as project
+import data as project
 from threading import *
 import time
 
@@ -9,8 +9,8 @@ class Csv(Thread):
 
         Thread.__init__(self)
         self.__csv_name = "/home/pi/Desktop/bathymetry_project/csv/" + time.asctime() + ".csv"
-        self.__old_data = "00,00,00,00"
-        self.__new_data = "00,00,00,00"
+        self.__old_data = "00.00.00,00.0000,00.0000,00,00,00"
+        self.__new_data = "00.00.00,00.0000,00.0000,00,00,00"
         self.__csv_file = open(self.__csv_name, "w")
         self.__csv_file.close()
 
@@ -18,13 +18,19 @@ class Csv(Thread):
 
         while True:
 
-            self.__new_data = project.data
+            if project.collect:
 
-            if self.__new_data == self.__old_data:
+                self.__new_data = project.data
 
-                self.__old_data = self.__new_data
-                self.__csv_file.write(self.__new_data)
-                self.__csv_file.close()
+                if not self.__new_data == self.__old_data:
+
+                    self.__old_data = self.__new_data
+                    self.__csv_file.write(self.__new_data)
+                    self.__csv_file.close()
+
+                else:
+
+                    pass
 
             else:
 

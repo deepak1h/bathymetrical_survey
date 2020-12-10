@@ -1,4 +1,4 @@
-import main as project
+import data as project
 import time
 
 while True:
