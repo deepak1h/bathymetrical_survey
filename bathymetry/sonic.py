@@ -32,19 +32,23 @@ class Sonic(Thread):
         self.__curr_time = ""
 
     def on(self):
-        print("sonic ON")
+        
+        #print("sonic ON")
         self.__status = True
         
     def burst_on(self):
+        
         print("sonic burst on")
         self.__burst = True
     
     def burst_off(self):
+        
         print("sonic burst Off")
         self.__burst = False
 
     def off(self):
-        print("sonic OFF")
+        
+        #print("sonic OFF")
         self.__status = False
 
     def depth(self):

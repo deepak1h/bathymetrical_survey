@@ -68,8 +68,9 @@ class Gps(Thread):
                     # print(self.__buffer)
 
                     if len(self.__buffer) < 50:
-
-                        print("booting")
+                        
+                        # print(self.__buffer)
+                        # print("booting")
                         self.reset()
                         self.get_data()
 
