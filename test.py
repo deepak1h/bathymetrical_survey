@@ -1,5 +1,7 @@
-import main as project
+import data as project
 import time
+import csv.csv
+import log.
 
 while True:
     project.collect_data()

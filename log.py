@@ -18,7 +18,7 @@ class Log(Thread):
 
         while True:
 
-            self.__new_time = project.time_update_log
+            self.__new_time = project.time_update
 
             if self.__new_time > self.__old_time:
 
@@ -26,7 +26,11 @@ class Log(Thread):
                 self.__old_time = self.__new_time
                 self.__log_file.write(time.asctime().split()[3]+","+str(project.location))
                 self.__log_file.close()
+                time.sleet(1)
 
             else:
 
                 pass
+
+
+log = Log()
