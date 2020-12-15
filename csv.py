@@ -25,7 +25,7 @@ class Csv(Thread):
                 
                 self.__old_data = self.__new_data
                 data = self.__new_data.split(",")
-                # print(data)
+                print(data)
                 
                 if data[0] != "GPSLCKERR":
                     
@@ -33,6 +33,7 @@ class Csv(Thread):
                     data = ",".join([data[0],data[1],data[2],data[-1]])
                     self.__csv_file = open(self.__csv_name,"a")
                     self.__csv_file.write(data+"\n")
+                    print("stored")
                     self.__csv_file.close()
                     
                 else:

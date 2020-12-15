@@ -1,4 +1,4 @@
-import main as project
+import data as project
 from threading import *
 import time
 
@@ -8,9 +8,9 @@ class Log(Thread):
     def __init__(self):
 
         Thread.__init__(self)
-        self.__log_name = "/home/pi/Desktop/bathymetry_project/log/" + time.asctime() + ".txt"
-        self.__old_time = []
-        self.__new_time = []
+        self.__log_name = "/home/pi/Desktop/bathymetrical_survey/log/" + time.asctime() + ".txt"
+        self.__old_time = 0.00
+        self.__new_time = 0.00
         self.__log_file = open(self.__log_name, "w")
         self.__log_file.close()
 
@@ -24,9 +24,10 @@ class Log(Thread):
 
                 self.__log_file = open(self.__log_name, "a")
                 self.__old_time = self.__new_time
-                self.__log_file.write(time.asctime().split()[3]+","+str(project.location))
+                print("updated")
+                self.__log_file.write(time.asctime().split()[3]+","+str(project.location)+"\n")
                 self.__log_file.close()
-                time.sleet(1)
+                time.sleep(1)
 
             else:
 
