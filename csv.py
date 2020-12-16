@@ -50,4 +50,3 @@ class Csv(Thread):
 
 
 csv = Csv()
-csv.start()

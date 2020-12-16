@@ -10,8 +10,6 @@ class BathymetryData(Thread):
         Thread.__init__(self)
         self.__gps = gps.Gps()
         self.__sonic = sonic.Sonic(18, 23)
-        self.__gps.start()
-        self.__sonic.start()
         self.__depth = "00"
         self.__location = ["00.00.00", "0.0000,0.0000"]
         self.__time = "00.00.00"
@@ -54,6 +52,9 @@ class BathymetryData(Thread):
         return ",".join(self.__location)
 
     def run(self):
+
+        self.__gps.start()
+        self.__sonic.start()
 
         while True:
             
