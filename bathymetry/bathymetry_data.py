@@ -35,13 +35,15 @@ class BathymetryData(Thread):
 
     def location(self):
 
-        if self.__gps.locked():
-
-            self.__location = self.__gps.location()
+        if not self.__gps.locked():
+            
+            # print(self.__gps.locked())
+            self.__location = ["GPSLCKERR"]
+            
 
         else:
-
-            self.__location = ["GPSERR"]
+            self.__location = self.__gps.location()
+            
 
     def data(self):
 
@@ -54,8 +56,10 @@ class BathymetryData(Thread):
     def run(self):
 
         while True:
+            
+            if self.__gps.locked():
 
-            self.__lat_long = self.__gps.lat_long()
+                self.__lat_long = self.__gps.lat_long()
 
     def lat_long(self):
 
