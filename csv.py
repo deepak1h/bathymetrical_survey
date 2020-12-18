@@ -33,11 +33,10 @@ class Csv(Thread):
                 
                 if data[0] != "GPSLCKERR":
                     
-                    print("CSV Append.")
+                    print("CSV UPDATED.")
                     data = ",".join([data[0], data[1], data[2], data[-1]])
                     self.__csv_file = open(self.__csv_name, "a")
                     self.__csv_file.write(data+"\n")
-                    print("stored")
                     self.__csv_file.close()
                     
                 else:

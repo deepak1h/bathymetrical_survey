@@ -7,12 +7,14 @@ import time
 project.start()
 log.start()
 csv.start()
+server.start()
+server.start_upload()
 
 while True:
     time.sleep(1)
     collect_data()
 
-server.start()
-server.start_upload()
+
+
 
 

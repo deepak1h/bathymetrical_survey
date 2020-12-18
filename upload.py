@@ -30,7 +30,7 @@ class Server(Thread):
 
                 try:
 
-                    self.__file_name = "/home/pi/Desktop/bathymetrical_survey/csv/Fri Dec 18 16-20-16 2020.csv"
+                    self.__file_name = csv.file_name
                     
 
                     with open(self.__file_name, 'r') as file:
@@ -42,13 +42,14 @@ class Server(Thread):
 
                                 self.update(line)
                                 self.put_data()
-                                print("data")
 
                             else:
 
                                 time.sleep(1)
+                                print("Waiting for upload")
 
                 except IOError:
+                    print("Not uploading")
                     time.sleep(5)
 
     def update(self, line):
@@ -66,7 +67,7 @@ class Server(Thread):
         r.close()
 
         if data=="\nsuccess":
-            print("true")
+            print("Uploaded")
             return True
 
         else:
