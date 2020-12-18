@@ -15,12 +15,6 @@ window = Tk()
 
 b1 = Button(window,text = "Take Data", command = collect_data)
 
-b1.pack
+b1.pack()
 
 window.mainloop()
-
-
-
-
-
-
