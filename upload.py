@@ -75,4 +75,4 @@ class Server(Thread):
             self.put_data()
             
     
-s = Server()
+server = Server()

@@ -18,7 +18,7 @@ class Project(Thread):
     def __init__(self):
         Thread.__init__(self)
         self.__project = bathymetry.BathymetryData()
-        self.__project.start()
+
 
     def run(self):
         
@@ -26,13 +26,17 @@ class Project(Thread):
         global location
         global collect
         global time_update
+        self.__project.start()
+
         while True:
+
             if collect:
+
                 data = self.__project.data()
                 collect = False
+
             location = self.__project.lat_long()
             time_update = time.time()
 
 
 project = Project()
-project.start()
