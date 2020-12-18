@@ -186,4 +186,4 @@ class Gps(Thread):
 
     def lat_long(self):
 
-        return [self.__lat_in_degree, self.__long_in_degree]
+        return [self.__lat_in_degree, self.__long_in_degree, self.__locked, self.__satellite]

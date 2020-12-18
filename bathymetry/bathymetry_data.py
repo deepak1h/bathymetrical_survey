@@ -22,7 +22,7 @@ class BathymetryData(Thread):
         self.__location = ["00.00.00", "0.0000", "0.0000"]
         self.__time = "00.00.00"
         self.__data = ["00.00.00", "0.0000", "0.0000", "00", "00", "00"]
-        self.__lat_long = ["0.0000", "0.0000"]
+        self.__lat_long = ["0.0000", "0.0000", "00","00"]
 
     def depth(self):
         
