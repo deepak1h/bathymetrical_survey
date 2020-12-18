@@ -8,7 +8,7 @@ class Csv(Thread):
     def __init__(self):
 
         Thread.__init__(self)
-        self.__csv_name = "/home/pi/Desktop/bathymetrical_survey/csv/" + time.asctime() + ".csv"
+        self.__csv_name = "/home/pi/Desktop/bathymetrical_survey/csv/" + time.asctime().replace(":","-") + ".csv"
         self.__old_data = "00.00.00,00.0000,00.0000,00,00,00"
         self.__new_data = "00.00.00,00.0000,00.0000,00,00,00"
         self.__csv_file = open(self.__csv_name, "w")
@@ -29,7 +29,6 @@ class Csv(Thread):
                 
                 if data[0] != "GPSLCKERR":
                     
-                    print("CSV Append.")
                     data = ",".join([data[0],data[1],data[2],data[-1]])
                     self.__csv_file = open(self.__csv_name,"a")
                     self.__csv_file.write(data+"\n")

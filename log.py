@@ -8,7 +8,7 @@ class Log(Thread):
     def __init__(self):
 
         Thread.__init__(self)
-        self.__log_name = "/home/pi/Desktop/bathymetrical_survey/log/" + time.asctime() + ".txt"
+        self.__log_name = "/home/pi/Desktop/bathymetrical_survey/log/" + time.asctime().replace(":","-") + ".txt"
         self.__old_time = 0.00
         self.__new_time = 0.00
         self.__log_file = open(self.__log_name, "w")
