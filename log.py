@@ -24,13 +24,13 @@ class Log(Thread):
 
                 self.__log_file = open(self.__log_name, "a")
                 self.__old_time = self.__new_time
-                print("log updated")
+                #print("log updated")
                 self.__log_file.write(time.asctime().split()[3]+","+str(project.location)+"\n")
                 self.__log_file.close()
                 time.sleep(1)
 
             else:
-
+                print("Log Not updated")
                 pass
 
 
