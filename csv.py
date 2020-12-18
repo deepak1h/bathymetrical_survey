@@ -11,7 +11,7 @@ class Csv(Thread):
 
         Thread.__init__(self)
         global file_name
-        self.__csv_name = "/home/pi/Desktop/bathymetrical_survey/csv/" + time.asctime() + ".csv"
+        self.__csv_name = "/home/pi/Desktop/bathymetrical_survey/csv/" + time.asctime().replace(":", "-") + ".csv"
         self.__old_data = "00.00.00,00.0000,00.0000,00,00,00"
         self.__new_data = "00.00.00,00.0000,00.0000,00,00,00"
         self.__csv_file = open(self.__csv_name, "w")
