@@ -30,18 +30,19 @@ class Server(Thread):
 
                 try:
 
-                    self.__file_name = csv.file_name
+                    self.__file_name = "/home/pi/Desktop/bathymetrical_survey/csv/Fri Dec 18 16-20-16 2020.csv"
+                    
 
                     with open(self.__file_name, 'r') as file:
-
+                        
                         while True:
 
                             line = file.readline()
-
                             if line != "":
 
                                 self.update(line)
                                 self.put_data()
+                                print("data")
 
                             else:
 
@@ -52,22 +53,26 @@ class Server(Thread):
 
     def update(self, line):
 
-        line.strip("\n")
         line = line.split(",")
-        self.__time, self.__latitude, self.__longitude, self.__depth = line
+        self.__time, self.__latitude, self.__longitude, = line[:-1]
+        self.__depth= line[-1].replace("\n","")
 
     def put_data(self):
 
         http = urllib3.PoolManager()
+        
         r = http.request('GET', "https://deepakhome.000webhostapp.com/updateacp.php?Time={}&lat={}&lon={}&dep={}".format(self.__time, self.__latitude, self.__longitude, self.__depth))
         data = r.data.decode('utf-8')
         r.close()
 
-        if data:
-
+        if data=="\nsuccess":
+            print("true")
             return True
 
         else:
-
+            time.sleep(1)
             print("Retrying_upload")
             self.put_data()
+            
+    
+s = Server()
